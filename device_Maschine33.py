@@ -6,6 +6,7 @@ import transport
 import mixer
 import ui
 import midi
+import playlist
 
 # Globals
 Zoom_Axis = 1
@@ -44,12 +45,14 @@ class TSimple():
 					ui.showWindow(midi.widMixer)
 				# Toggle the Zoom Axis Global (Click big wheel)
 				elif event.data1 == 78:
+					ui.showWindow(midi.widPlaylist)
 					if event.data2 == 127:
 						Zoom_Axis = 0
 					else:
 						Zoom_Axis = 1
 				# Handle Zoom
 				elif event.data1 == 77:
+					ui.showWindow(midi.widPlaylist)
 					if event.data2 == 127:
 						if Zoom_Axis == 0:
 							ui.jog2(-1)
@@ -69,6 +72,12 @@ class TSimple():
 				#Record
 				elif event.data1 == 95:
 					transport.globalTransport(midi.FPT_Record, 1)
+				elif (event.data1 == 101):
+					ui.showWindow(midi.widPlaylist)
+					if event.data2 == 127:
+						ui.jog(1)
+					elif event.data2 == 1:
+						ui.jog(-1)
 		else:
 			event.handled = False
 Simple = TSimple()
